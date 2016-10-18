@@ -24,7 +24,7 @@ handler.on('push', function(event) {
         event.payload.repository.name,
         event.payload.ref);
 
-    var repoPath = path.join('home/regnier/web/developpement', event.payload.repository.name);
+    var repoPath = path.join('/home/regnier/web/developpement', event.payload.repository.name);
 
     if (fs.existsSync(repoPath)) {
         var repo = git(repoPath);
@@ -32,7 +32,7 @@ handler.on('push', function(event) {
             console.log(err);
         });
     } else {
-        clone(event.payload.repository.html_url, 'home/regnier/web/developpement')
+        clone(event.payload.repository.html_url, '/home/regnier/web/developpement')
         .then(repo => console.log(repo.path()));
     }
 })
