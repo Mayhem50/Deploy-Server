@@ -2,9 +2,9 @@ var http = require('http')
 var createHandler = require('github-webhook-handler')
 var handler = createHandler({ path: '/webhook', secret: 'benjamin' });
 
-var exec = require('child_process').exec;
-
-function puts(error, stdout, stderr) { console.log(stdout) }
+var git = require('gitty');
+var fs = require('fs');
+var path = require('path');
 
 http.createServer(function(req, res) {
     handler(req, res, function(err) {
@@ -22,7 +22,20 @@ handler.on('push', function(event) {
         event.payload.repository.name,
         event.payload.ref);
 
-    exec("ls -la", puts);
+    var repoPath = path.join('home/regnier/web/developpement', event.payload.repository.name);
+
+    if(fs.existsSync(repoPath)){
+        var repo = git(repoPath);
+        repo.pull(function(err){
+            console.log(err);
+        });
+    }
+    else{
+        var repo = git('home/regnier/web/developpement');
+        repo.clone(function(err){
+            console.log(err);
+        })
+    }
 })
 
 handler.on('issues', function(event) {
