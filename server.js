@@ -6,6 +6,8 @@ var git = require('gitty');
 var fs = require('fs');
 var path = require('path');
 
+var clone = require('nodegit-clone');
+
 http.createServer(function(req, res) {
     handler(req, res, function(err) {
         res.statusCode = 404
@@ -24,17 +26,14 @@ handler.on('push', function(event) {
 
     var repoPath = path.join('home/regnier/web/developpement', event.payload.repository.name);
 
-    if(fs.existsSync(repoPath)){
+    if (fs.existsSync(repoPath)) {
         var repo = git(repoPath);
-        repo.pull(function(err){
+        repo.pull(function(err) {
             console.log(err);
         });
-    }
-    else{
-        var repo = git('home/regnier/web/developpement');
-        repo.clone(function(err){
-            console.log(err);
-        })
+    } else {
+        clone(event.payload.repository.html_url, 'home/regnier/web/developpement')
+        .then(repo => console.log(repo.path()));
     }
 })
 

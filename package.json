@@ -16,6 +16,7 @@
     "github-webhook-handler": "^0.6.0",
     "gitty": "^3.5.0",
     "http": "0.0.0",
+    "nodegit-clone": "^1.2.0",
     "path": "^0.12.7"
   }
 }
