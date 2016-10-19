@@ -39,7 +39,7 @@ handler.on('push', function(event) {
         });
     } else {
         console.log('Git clone');
-        exec("git clone " + event.payload.repository.html_url + " /home/regnier/web/developpement", puts);
+        exec("git clone " + event.payload.repository.html_url + " /home/regnier/web/developpement/" + event.payload.repository.name, puts);
     }
 })
 
