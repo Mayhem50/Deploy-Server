@@ -32,12 +32,14 @@ handler.on('push', function(event) {
     var repoPath = path.join('/home/regnier/web/developpement', event.payload.repository.name);
 
     if (fs.existsSync(repoPath)) {
+        console.log('Repo exist : Pull from git');
         var repo = git(repoPath);
         repo.pull(function(err) {
             console.log(err);
         });
-    } else {        
-        exec("git clone " + event.payload.repository.html_url + " /home/regnier/web/developpement" , puts);
+    } else {
+        console.log('Git clone');
+        exec("git clone " + event.payload.repository.html_url + " /home/regnier/web/developpement", puts);
     }
 })
 
