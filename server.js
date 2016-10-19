@@ -8,6 +8,11 @@ var path = require('path');
 
 var clone = require('nodegit-clone');
 
+
+var exec = require('child_process').exec;
+
+function puts(error, stdout, stderr) { console.log(stdout) }
+
 http.createServer(function(req, res) {
     handler(req, res, function(err) {
         res.statusCode = 404
@@ -31,9 +36,8 @@ handler.on('push', function(event) {
         repo.pull(function(err) {
             console.log(err);
         });
-    } else {
-        clone(event.payload.repository.html_url, '/home/regnier/web/developpement')
-        .then(repo => console.log(repo.path()));
+    } else {        
+        exec("git clone " + event.payload.repository.html_url + " /home/regnier/web/developpement" , puts);
     }
 })
 
