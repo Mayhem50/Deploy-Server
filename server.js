@@ -33,10 +33,7 @@ handler.on('push', function(event) {
 
     if (fs.existsSync(repoPath)) {
         console.log('Repo exist : Pull from git');
-        var repo = git(repoPath);
-        repo.pull(function(err) {
-            console.log(err);
-        });
+        exec("/home/regnier/web/developpement/" + event.payload.repository.name + "/git pull", puts);
     } else {
         console.log('Git clone');
         exec("git clone " + event.payload.repository.html_url + " /home/regnier/web/developpement/" + event.payload.repository.name, puts);
