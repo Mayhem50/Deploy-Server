@@ -7,7 +7,7 @@ var createHandler = require('github-webhook-handler');
 var handler = createHandler({ path: '/', secret: 'benjamin' });
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
     handler(req, res, function(err) {
         res.statusCode = 404;
         res.end('no such location');
