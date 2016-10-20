@@ -1,22 +1,17 @@
 {
-  "name": "deploy-server",
-  "version": "0.0.1",
-  "description": "Github Webhook server for deploying website",
-  "main": "server.js",
+  "name": "Deploy-Server",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www"
   },
-  "keywords": [
-    "deploy"
-  ],
-  "author": "B-RR",
-  "license": "ISC",
   "dependencies": {
-    "fs": "0.0.1-security",
-    "github-webhook-handler": "^0.6.0",
-    "gitty": "^3.5.0",
-    "http": "0.0.0",
-    "nodegit-clone": "^1.2.0",
-    "path": "^0.12.7"
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.13.4",
+    "jade": "~1.11.0",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0"
   }
 }
