@@ -4,7 +4,7 @@ var router = express.Router();
 var path = require('path');
 
 var createHandler = require('github-webhook-handler');
-var handler = createHandler({ path: '/', secret: 'benjamin' });
+var handler = createHandler({ path: '/webhook', secret: 'benjamin' });
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
