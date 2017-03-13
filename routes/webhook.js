@@ -1,37 +1,26 @@
-var express = require('express');
-var router = express.Router();
-
 var path = require('path');
+var fs = require('fs');
 
-var createHandler = require('github-webhook-handler');
-var handler = createHandler({ path: '/webhook', secret: 'benjamin' });
-
-/* GET users listing. */
-router.post('/', function(req, res, next) {
-    handler(req, res, function(err) {
-        res.statusCode = 404;
-        res.end('no such location');
-    });
-});
+var gitHubWebhook = require('express-github-webhook');
+var handler = gitHubWebhook({ path: '/webhook', secret: 'benjamin' });
 
 handler.on('error', function(err) {
     console.error('Error:', err.message);
 });
 
-handler.on('push', function(event) {
-    console.log('Received a push event for %s to %s',
-        event.payload.repository.name,
-        event.payload.ref);
+handler.on('push', function(repo, data) {
+    console.log(repo);
+    console.log(data);
 
-    var repoPath = path.join('/home/regnier/web/developpement', event.payload.repository.name);
+    var repoPath = path.join('/home/regnier/web/developpement', repo);
 
     if (fs.existsSync(repoPath)) {
         console.log('Repo exist : Pull from git');
-        exec("cd /home/regnier/web/developpement/" + event.payload.repository.name + " && git pull", puts);
+        exec("cd /home/regnier/web/developpement/" + repo + " && git pull", puts);
     } else {
         console.log('Git clone');
-        exec("git clone " + event.payload.repository.html_url + " /home/regnier/web/developpement/" + event.payload.repository.name, puts);
+        exec("git clone " + data.repository.html_url + " /home/regnier/web/developpement/" + repo, puts);
     }
 });
 
-module.exports = router;
+module.exports = handler;
